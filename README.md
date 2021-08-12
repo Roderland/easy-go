@@ -18,7 +18,7 @@ func (p Person) Less(e interface{}) bool {
 }
 
 func main() {
-	// use 'easy_go.Interface' to make a slice instead of 'Person'
+    // use 'easy_go.Interface' to make a slice instead of 'Person'
     slice := make([]easy_go.Interface, 0)
     slice = append(slice, Person{"Alice", 18})
     slice = append(slice, Person{"Bob", 17})
