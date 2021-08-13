@@ -78,7 +78,7 @@ func (pq *PriorityQueue) up() {
 	child := pq.size
 	parent := child / 2
 	array[0] = tmp
-	for tmp.Less(array[parent]) {
+	for tmp.CompareTo(array[parent]) < 0 {
 		array[child] = array[parent]
 		child = parent
 		parent = child / 2
@@ -94,10 +94,10 @@ func (pq *PriorityQueue) down() {
 	for left <= pq.size {
 		child := left
 		right := left + 1
-		if right <= pq.size && array[right].Less(array[left]) {
+		if right <= pq.size && array[right].CompareTo(array[left]) < 0 {
 			child = right
 		}
-		if array[child].Less(tmp) {
+		if array[child].CompareTo(tmp) < 0 {
 			array[parent] = array[child]
 		} else {
 			break

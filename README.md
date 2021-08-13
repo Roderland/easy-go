@@ -5,26 +5,29 @@ Data structure and algorithm implementation for golang
 ### 1.PriorityQueue
 Define your struct and implements 'easy-go/Interface'. 
 
-Actually you only need to implement 'func Less(e interface{}) bool {}'.
+Actually you only need to implement 'CompareTo(e interface{}) int {}'.
 ```go
 type Person struct {
     name string
-    age int
+    age  int
 }
 
-// Less compare by person.age
-func (p Person) Less(e interface{}) bool {
-    return p.age < e.(Person).age
+// CompareTo compare by person.age then person.name
+func (p Person) CompareTo(e interface{}) int {
+    if p.age == e.(Person).age {
+        return strings.Compare(p.name, e.(Person).name)
+    }
+    return p.age - e.(Person).age
 }
 
-func main() {
+func exampleOfPriorityQueue() {
     // use 'easy_go.Interface' to make a slice instead of 'Person'
     slice := make([]easy_go.Interface, 0)
     slice = append(slice, Person{"Alice", 18})
     slice = append(slice, Person{"Bob", 17})
     slice = append(slice, Person{"John", 18})
     slice = append(slice, Person{"Mark", 19})
-    // you can get a PriorityQueue by inputting a slice 
+    // you can get a PriorityQueue by inputting a slice
     priorityQueue := easy_go.NewPriorityQueueWithSlice(slice)
     // push
     priorityQueue.Push(Person{"Bill", 16})
@@ -34,3 +37,34 @@ func main() {
     }
 }
 ```
+
+### 2.SkipList
+Define your struct and implements 'easy-go/Interface'.
+
+Actually you only need to implement 'CompareTo(e interface{}) int {}'.
+
+You can implement a variety of comparison functions by passing function pointers to the constructor.
+```go
+func exampleOfSkipList() {
+    // define a unnamed compare-function to replace 'person.CompareTo'
+    skipList := easy_go.NewSkipListWithCompare(func(a, b easy_go.Interface) int {
+        return strings.Compare(a.(Person).name, b.(Person).name)
+    })
+    
+    skipList.Put(Person{"Alice", 18})
+    skipList.Update(Person{"Alice", 19})
+    skipList.Update(Person{"Bob", 17})
+    skipList.Put(Person{"Bob", 15})
+    skipList.Put(Person{"Mark", 19})
+    skipList.Remove(Person{"Mark", -1})
+
+    Alice := skipList.Get(Person{"Alice", -1})
+    Bob := skipList.Get(Person{"Bob", -1})
+    Mark := skipList.Get(Person{"Mark", -1})
+    
+    fmt.Println(Alice)
+    fmt.Println(Bob)
+    fmt.Println(Mark)
+}
+```
+
