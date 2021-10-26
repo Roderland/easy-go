@@ -67,7 +67,7 @@ func exampleOfSkipList() {
     fmt.Println(Mark)
 }
 ```
-### 2.BitMap
+### 3.BitMap
 ```go
 func exampleOfBitMap() {
 	bitMap := easy_go.NewBitMap(33)
